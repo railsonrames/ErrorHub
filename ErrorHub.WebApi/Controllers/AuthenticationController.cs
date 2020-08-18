@@ -8,7 +8,7 @@ namespace ErrorHub.WebApi.Controllers
 {
     [Route("api/login")]
     [ApiController]
-    public class AuthenticationController : Controller
+    public sealed class AuthenticationController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserService _userService;

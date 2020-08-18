@@ -5,6 +5,7 @@ using ErrorHub.Domain.Repositories.Interfaces;
 using ErrorHub.Domain.Services;
 using ErrorHub.Domain.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -65,6 +66,13 @@ namespace ErrosHub.WebApi
                 y.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
             });
 
+            services.AddAuthorization(x =>
+            {
+                x.AddPolicy(TokenConfiguration.Policy, new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
+            });
+
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new OpenApiInfo
@@ -104,6 +112,10 @@ namespace ErrosHub.WebApi
 
             app.UseCors("EnableCORS");
 
+            app.UseAuthentication();
+            app.UseRouting();
+            app.UseAuthorization();
+
             app.UseSwagger();
             app.UseSwaggerUI(x =>
             {
@@ -112,9 +124,6 @@ namespace ErrosHub.WebApi
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

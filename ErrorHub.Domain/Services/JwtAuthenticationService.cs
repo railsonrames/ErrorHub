@@ -33,7 +33,7 @@ namespace ErrorHub.Domain.Services
 
             var identity = new ClaimsIdentity(new GenericIdentity(user.Id.ToString(), "Login"), claims);
             var created = DateTime.UtcNow;
-            var expiration = created + TimeSpan.FromMinutes(60);
+            var expiration = created + TimeSpan.FromSeconds(_tokenConfiguration.ExpirationInSeconds);
             var handler = new JwtSecurityTokenHandler();
             var securityToken = handler.CreateToken(new SecurityTokenDescriptor
             {
