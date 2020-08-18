@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ErrorHub.Domain.Entities
+namespace ErrosHub.WebApi.ViewModels
 {
-    public class User
+    public class UserVM
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int? Id { get; set; }
         [Required(ErrorMessage = "Nome obrigatório.")]
         public string Name { get; set; }
         [Required(ErrorMessage = "E-mail obrigatório.")]

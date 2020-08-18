@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ErrorHub.Data\ErrorHub.Data.csproj" />
-    <ProjectReference Include="..\ErrorHub.Domain\ErrorHub.Domain.csproj" />
+    <ProjectReference Include="..\ErrorHub.Data\ErrorHub.Domain.csproj" />
   </ItemGroup>
 
 
