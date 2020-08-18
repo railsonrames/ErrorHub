@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200818030936_UsingSeedData.cs" />
     <Compile Remove="Migrations\20200818030936_UsingSeedData.Designer.cs" />
+    <Compile Remove="Migrations\20200818130311_AddingAutoincrementToTable.cs" />
+    <Compile Remove="Migrations\20200818130311_AddingAutoincrementToTable.Designer.cs" />
+    <Compile Remove="Migrations\20200818130953_AddingAutoincrementToTable.cs" />
+    <Compile Remove="Migrations\20200818130953_AddingAutoincrementToTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,10 +29,6 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.7" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
