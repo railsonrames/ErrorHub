@@ -1,6 +1,7 @@
 ﻿using ErrorHub.Data.Context;
 using ErrorHub.Domain.Entities;
 using ErrorHub.Domain.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
@@ -44,10 +45,20 @@ namespace ErrorHub.Data.Repositories
 
         public void Update(ErrorOccurrence errorOccurrence)
         {
-            var errorOccurrenceRecovered = _context.ErrorOccurrences
+            var errorOccurrenceRecovered = _context.ErrorOccurrences.AsNoTracking()
                 .FirstOrDefault(x => x.Id == errorOccurrence.Id);
 
             if (errorOccurrenceRecovered == null) throw new Exception($"Ocorrência de erro com id {errorOccurrence.Id} não encontrada.");
+
+            errorOccurrence.Title = string.IsNullOrEmpty(errorOccurrence.Title)
+                ? string.IsNullOrEmpty(errorOccurrenceRecovered.Title) ? "Não informado." : errorOccurrenceRecovered.Title
+                : errorOccurrence.Title;
+            errorOccurrence.Description = string.IsNullOrEmpty(errorOccurrence.Description)
+                ? string.IsNullOrEmpty(errorOccurrenceRecovered.Description) ? "Não informado." : errorOccurrenceRecovered.Description
+                : errorOccurrence.Description;
+            errorOccurrence.Origin = string.IsNullOrEmpty(errorOccurrence.Origin)
+                ? string.IsNullOrEmpty(errorOccurrenceRecovered.Origin) ? "Não informado." : errorOccurrenceRecovered.Origin
+                : errorOccurrence.Origin;
 
             _context.ErrorOccurrences.Update(errorOccurrence);
             _context.SaveChanges();

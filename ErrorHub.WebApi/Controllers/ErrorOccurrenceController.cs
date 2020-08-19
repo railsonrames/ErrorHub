@@ -69,12 +69,13 @@ namespace ErrosHub.WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult Update(ErrorOccurrenceVM errorOccurrence)
+        public IActionResult Update(int id, ErrorOccurrenceVM errorOccurrence)
         {
             try
             {
                 _errorOccurrenceService.Update(new ErrorOccurrence
                 {
+                    Id = id,
                     Title = errorOccurrence.Title,
                     Level = errorOccurrence.Level,
                     Environment = errorOccurrence.Environment,
@@ -92,7 +93,7 @@ namespace ErrosHub.WebApi.Controllers
             return StatusCode(204);
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("archive/{id}")]
         public IActionResult ArchiveRecord(int id)
         {
             try
