@@ -43,14 +43,19 @@ namespace ErrosHub.WebApi
 
             services.AddDbContext<ErrorHubContext>();
 
-            services.AddControllers();
-
             services.AddHttpContextAccessor();
 
             services.AddSingleton<IAuthenticationService, JwtAuthenticationService>();
+            //services.AddSingleton<IAuthorizationService, FakeAuthorizationService>();
+            services.AddSingleton<ILoggedUserService, LoggedUserService>();
+
             services.AddScoped<IErrorOccurrenceRepository, ErrorOccurrenceRepository>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IErrorOccurrenceService, ErrorOccurrenceService>();
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+
+            services.AddControllers();
 
             services.AddAuthentication(x =>
             {
@@ -103,6 +108,13 @@ namespace ErrosHub.WebApi
                     }, new List<string>()
                     }});
             });
+
+            services.AddMvcCore()
+                .AddAuthorization()
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.IgnoreNullValues = true;
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -112,8 +124,8 @@ namespace ErrosHub.WebApi
 
             app.UseCors("EnableCORS");
 
-            app.UseAuthentication();
             app.UseRouting();
+
             app.UseAuthorization();
 
             app.UseSwagger();
@@ -121,9 +133,6 @@ namespace ErrosHub.WebApi
             {
                 x.SwaggerEndpoint(url: "/swagger/v1/swagger.json", name: "Central de Erros");
             });
-
-            app.UseHttpsRedirection();
-
 
             app.UseEndpoints(endpoints =>
             {

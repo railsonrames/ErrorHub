@@ -8,7 +8,7 @@ namespace ErrorHub.WebApi.Controllers
 {
     [Route("api/login")]
     [ApiController]
-    public sealed class AuthenticationController : Controller
+    public sealed class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserService _userService;
@@ -25,8 +25,8 @@ namespace ErrorHub.WebApi.Controllers
         {
             var authorization = _userService.Authorize(new LoginDomain
             {
-                email = userData.email,
-                password = userData.password
+                email = userData.Email,
+                password = userData.Password
             });
 
             if (!authorization.Success)
@@ -38,6 +38,13 @@ namespace ErrorHub.WebApi.Controllers
                 return Ok(authentication);
 
             return Ok(authentication);
+        }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var usersList = _userService.GetAll();
+            return Ok(usersList);
         }
     }
 }

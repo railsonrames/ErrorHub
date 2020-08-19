@@ -10,20 +10,20 @@ namespace ErrorHub.WebApi.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    public class UserController : Controller
+    [Authorize("Bearer")]
+    public class UserController : ControllerBase
     {
-        private readonly IUserService _service;
+        private readonly IUserService _userService;
 
         public UserController(IUserService service)
         {
-            _service = service;
+            _userService = service;
         }
 
         [HttpGet]
-        [Authorize("Bearer")]
         public IActionResult GetAll()
         {
-            var usersList = _service.GetAll();
+            var usersList = _userService.GetAll();
             return Ok(usersList);
         }
 
@@ -32,7 +32,7 @@ namespace ErrorHub.WebApi.Controllers
         {
             try
             {
-                _service.Save(new User
+                _userService.Save(new User
                 {
                     Name = user.Name,
                     Email = user.Email,
@@ -52,10 +52,10 @@ namespace ErrorHub.WebApi.Controllers
         {
             try
             {
-                _service.Update(new LoginDomain
+                _userService.Update(new LoginDomain
                 {
-                    email = userData.email,
-                    password = userData.password
+                    email = userData.Email,
+                    password = userData.Password
                 });
             }
             catch (Exception e)
