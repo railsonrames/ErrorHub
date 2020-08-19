@@ -71,7 +71,7 @@ namespace ErrorHub.Data.Repositories
 
             if (errorOccurrenceRecovered == null) throw new Exception($"Ocorrência de erro com id {id} não encontrada.");
 
-            errorOccurrenceRecovered.ArchiviedRecord = true;
+            errorOccurrenceRecovered.ArchiviedRecord = !errorOccurrenceRecovered.ArchiviedRecord;
             _context.ErrorOccurrences.Update(errorOccurrenceRecovered);
             _context.SaveChanges();
         }

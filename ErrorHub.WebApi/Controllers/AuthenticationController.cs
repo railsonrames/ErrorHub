@@ -39,12 +39,5 @@ namespace ErrorHub.WebApi.Controllers
 
             return Ok(authentication);
         }
-
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            var usersList = _userService.GetAll();
-            return Ok(usersList);
-        }
     }
 }
