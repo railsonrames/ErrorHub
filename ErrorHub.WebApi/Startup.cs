@@ -38,7 +38,7 @@ namespace ErrosHub.WebApi
             new ConfigureFromConfigurationOptions<TokenConfiguration>(Configuration.GetSection(typeof(TokenConfiguration).Name)).Configure(token);
             services.AddSingleton(token);
 
-            var signingConfiguration = new SigningConfiguration();
+            var signingConfiguration = new SigningConfiguration(token);
             services.AddSingleton(signingConfiguration);
 
             services.AddDbContext<ErrorHubContext>();
@@ -68,7 +68,7 @@ namespace ErrosHub.WebApi
                 y.TokenValidationParameters.ValidIssuer = token.ValidIssuer;
                 y.TokenValidationParameters.ValidateIssuerSigningKey = token.ValidadeIssuerSigningKey;
                 y.TokenValidationParameters.ValidateLifetime = token.ValidateLifetime;
-                y.TokenValidationParameters.ClockSkew = TimeSpan.Zero;
+                y.TokenValidationParameters.ValidateIssuer = true;
             });
 
             services.AddAuthorization(x =>
@@ -126,6 +126,7 @@ namespace ErrosHub.WebApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();

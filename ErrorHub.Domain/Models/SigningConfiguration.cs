@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
+using System.Text;
 
 namespace ErrorHub.Domain.Models
 {
@@ -8,12 +8,12 @@ namespace ErrorHub.Domain.Models
         public SecurityKey Key { get; set; }
         public SigningCredentials SigningCredentials { get; set; }
 
-        public SigningConfiguration()
+        public SigningConfiguration(TokenConfiguration token)
         {
-            using (var provider = new RSACryptoServiceProvider(2048))
-                Key = new RsaSecurityKey(provider.ExportParameters(true));
+            var secret = Encoding.ASCII.GetBytes(token.Secret);
+            Key = new SymmetricSecurityKey(secret);
+            SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.HmacSha256Signature);
 
-            SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);
         }
     }
 }
