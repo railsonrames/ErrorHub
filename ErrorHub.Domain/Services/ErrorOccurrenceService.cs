@@ -1,4 +1,5 @@
 ﻿using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Repositories.Interfaces;
 using ErrorHub.Domain.Services.Interfaces;
 using System;
@@ -39,10 +40,27 @@ namespace ErrorHub.Domain.Services
             }
         }
 
+        public IList<ErrorOccurrence> GetByEnvironment(EnvironmentOccurrence environment)
+        {
+            try
+            {
+                return _repository.GetByEnvironment(environment);
+            }
+            catch (Exception e)
+            {
+                
+                throw e;
+            }
+        }
+
         public void Save(ErrorOccurrence errorOccurrence)
         {
             try
             {
+                if(errorOccurrence.CreatedAt == DateTime.MinValue || errorOccurrence.CreatedAt == null)
+                {
+                    errorOccurrence.CreatedAt = DateTime.Now;
+                }
                 _repository.Save(errorOccurrence);
             }
             catch (Exception e)
