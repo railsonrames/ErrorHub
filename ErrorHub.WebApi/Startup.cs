@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
 
 namespace ErrosHub.WebApi
@@ -46,7 +45,6 @@ namespace ErrosHub.WebApi
             services.AddHttpContextAccessor();
 
             services.AddSingleton<IAuthenticationService, JwtAuthenticationService>();
-            //services.AddSingleton<IAuthorizationService, FakeAuthorizationService>();
             services.AddSingleton<ILoggedUserService, LoggedUserService>();
 
             services.AddScoped<IErrorOccurrenceRepository, ErrorOccurrenceRepository>();

@@ -2,6 +2,7 @@
 using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Services.Interfaces;
 using ErrosHub.WebApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -10,6 +11,7 @@ namespace ErrosHub.WebApi.Controllers
 {
     [Route("api/error")]
     [ApiController]
+    [Authorize]
     public class ErrorOccurrenceController : ControllerBase
     {
         private readonly IErrorOccurrenceService _errorOccurrenceService;
