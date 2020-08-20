@@ -1,4 +1,5 @@
 ﻿using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Services.Interfaces;
 using ErrosHub.WebApi.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -49,23 +50,26 @@ namespace ErrosHub.WebApi.Controllers
         {
             try
             {
+                var environment = Enum.Parse(typeof(EnvironmentOccurrence), errorOccurrence.Environment, true);
+                var level = Enum.Parse(typeof(LevelOccurrence), errorOccurrence.Level, true);
                 _errorOccurrenceService.Save(new ErrorOccurrence
                 {
                     Title = errorOccurrence.Title,
-                    Level = errorOccurrence.Level,
-                    Environment = errorOccurrence.Environment,
+                    Level = (LevelOccurrence) level,
+                    Environment = (EnvironmentOccurrence) environment,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
                     CreatedAt = errorOccurrence.CreatedAt
                 });
+                // return StatusCode(201);
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-            return StatusCode(204);
+            return StatusCode(201);
         }
 
         [HttpPut]
@@ -73,17 +77,20 @@ namespace ErrosHub.WebApi.Controllers
         {
             try
             {
+                var environment = Enum.Parse(typeof(EnvironmentOccurrence), errorOccurrence.Environment, true);
+                var level = Enum.Parse(typeof(LevelOccurrence), errorOccurrence.Level, true);
                 _errorOccurrenceService.Update(new ErrorOccurrence
                 {
                     Id = id,
                     Title = errorOccurrence.Title,
-                    Level = errorOccurrence.Level,
-                    Environment = errorOccurrence.Environment,
+                    Level = (LevelOccurrence) level,
+                    Environment = (EnvironmentOccurrence) environment,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
                     CreatedAt = errorOccurrence.CreatedAt
                 });
+                // return Ok();
             }
             catch (Exception e)
             {
@@ -122,5 +129,6 @@ namespace ErrosHub.WebApi.Controllers
 
             return Ok("Deleted.");
         }
+
     }
 }
