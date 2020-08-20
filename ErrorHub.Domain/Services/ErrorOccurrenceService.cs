@@ -43,6 +43,10 @@ namespace ErrorHub.Domain.Services
         {
             try
             {
+                if(errorOccurrence.CreatedAt == DateTime.MinValue || errorOccurrence.CreatedAt == null)
+                {
+                    errorOccurrence.CreatedAt = DateTime.Now;
+                }
                 _repository.Save(errorOccurrence);
             }
             catch (Exception e)
