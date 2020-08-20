@@ -2,6 +2,7 @@
 using ErrorHub.Domain.Models;
 using ErrorHub.Domain.Services.Interfaces;
 using ErrosHub.WebApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,7 +10,7 @@ namespace ErrorHub.WebApi.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    //[Authorize("Bearer")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

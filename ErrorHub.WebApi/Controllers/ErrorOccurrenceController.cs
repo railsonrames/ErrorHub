@@ -1,6 +1,8 @@
 ﻿using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Services.Interfaces;
 using ErrosHub.WebApi.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -9,6 +11,7 @@ namespace ErrosHub.WebApi.Controllers
 {
     [Route("api/error")]
     [ApiController]
+    [Authorize]
     public class ErrorOccurrenceController : ControllerBase
     {
         private readonly IErrorOccurrenceService _errorOccurrenceService;
@@ -52,8 +55,8 @@ namespace ErrosHub.WebApi.Controllers
                 _errorOccurrenceService.Save(new ErrorOccurrence
                 {
                     Title = errorOccurrence.Title,
-                    Level = errorOccurrence.Level,
-                    Environment = errorOccurrence.Environment,
+                    Level = LevelOccurrence.Debug,
+                    Environment = EnvironmentOccurrence.Staging,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
@@ -77,8 +80,8 @@ namespace ErrosHub.WebApi.Controllers
                 {
                     Id = id,
                     Title = errorOccurrence.Title,
-                    Level = errorOccurrence.Level,
-                    Environment = errorOccurrence.Environment,
+                    Level = LevelOccurrence.Debug,
+                    Environment = EnvironmentOccurrence.Staging,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
