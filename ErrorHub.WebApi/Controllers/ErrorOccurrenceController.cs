@@ -72,6 +72,33 @@ namespace ErrosHub.WebApi.Controllers
                 return NoContent();
         }
 
+        [HttpGet("environment/{environment}")]
+        public IActionResult GetByEnvironment(string environment)
+        {
+            try
+            {
+                var environmentEnum = Enum.Parse(typeof(EnvironmentOccurrence), environment, true);
+                var recoveredList = _errorOccurrenceService.GetByEnvironment((EnvironmentOccurrence)environmentEnum);
+                var errorsList = recoveredList.Select(x => new ErrorOccurrenceVM
+                {
+                    Id = x.Id,
+                    Level = x.Level.ToString(),
+                    Environment = x.Environment.ToString(),
+                    Title = x.Title,
+                    Description = x.Description,
+                    ArchiviedRecord = x.ArchiviedRecord,
+                    Origin = x.Origin,
+                    CreatedAt = x.CreatedAt
+                });
+                return Ok(errorsList);
+                
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         [HttpPost]
         public IActionResult Save(ErrorOccurrenceVM errorOccurrence)
         {

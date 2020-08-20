@@ -1,5 +1,6 @@
 ﻿using ErrorHub.Data.Context;
 using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -35,6 +36,15 @@ namespace ErrorHub.Data.Repositories
                 return user;
 
             throw new Exception($"Ocorrência de erro com id {id} não encontrada.");
+        }
+
+        public List<ErrorOccurrence> GetByEnvironment(EnvironmentOccurrence environment)
+        {
+            var result = _context.ErrorOccurrences.Where(e => e.Environment == environment);
+            if (result.Any())
+                return result.ToList();
+
+            throw new Exception("Não há ocorrências de erro cadastradas.");
         }
 
         public void Save(ErrorOccurrence errorOccurrence)

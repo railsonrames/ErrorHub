@@ -1,4 +1,5 @@
 ﻿using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using ErrorHub.Domain.Repositories.Interfaces;
 using ErrorHub.Domain.Services.Interfaces;
 using System;
@@ -35,6 +36,19 @@ namespace ErrorHub.Domain.Services
             }
             catch (Exception e)
             {
+                throw e;
+            }
+        }
+
+        public IList<ErrorOccurrence> GetByEnvironment(EnvironmentOccurrence environment)
+        {
+            try
+            {
+                return _repository.GetByEnvironment(environment);
+            }
+            catch (Exception e)
+            {
+                
                 throw e;
             }
         }

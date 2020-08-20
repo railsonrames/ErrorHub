@@ -1,4 +1,5 @@
 ﻿using ErrorHub.Domain.Entities;
+using ErrorHub.Domain.Enuns;
 using System.Collections.Generic;
 
 namespace ErrorHub.Domain.Services.Interfaces
@@ -7,6 +8,7 @@ namespace ErrorHub.Domain.Services.Interfaces
     {
         IList<ErrorOccurrence> GetAll();
         ErrorOccurrence GetById(int id);
+        IList<ErrorOccurrence> GetByEnvironment(EnvironmentOccurrence environment);
         void Save(ErrorOccurrence errorOccurrence);
         void Update(ErrorOccurrence errorOccurrence);
         void ArchiveRecord(int id);
