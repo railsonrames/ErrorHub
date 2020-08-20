@@ -19,6 +19,21 @@ namespace ErrorHub.WebApi.Controllers
             _userService = userService;
         }
 
+        /// <summary>
+        /// Autentica e gera o token JWT que precisamos para acessas os outros endpoint da aplicação.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo:
+        ///
+        ///     POST
+        ///     {
+        ///        "email": "rames.wiz@outlook.com",
+        ///        "password": "senha"
+        ///     }
+        ///
+        /// </remarks>
+        /// <param email="string"></param>
+        /// <param senha="string"></param>
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Authenticate([FromBody] LoginVM userData)

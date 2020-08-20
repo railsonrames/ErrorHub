@@ -77,19 +77,18 @@ namespace ErrosHub.WebApi.Controllers
         {
             try
             {
-                var environment = Enum.Parse(typeof(EnvironmentOccurrence), errorOccurrence.Environment, true);
-                var level = Enum.Parse(typeof(LevelOccurrence), errorOccurrence.Level, true);
+                var level = (LevelOccurrence)Enum.Parse(typeof(LevelOccurrence), errorOccurrence.Level, true);
+                var environment = (EnvironmentOccurrence)Enum.Parse(typeof(EnvironmentOccurrence), errorOccurrence.Environment, true);
                 _errorOccurrenceService.Save(new ErrorOccurrence
                 {
                     Title = errorOccurrence.Title,
-                    Level = (LevelOccurrence)level,
-                    Environment = (EnvironmentOccurrence)environment,
+                    Level = level,
+                    Environment = environment,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
                     CreatedAt = errorOccurrence.CreatedAt
                 });
-                // return StatusCode(201);
             }
             catch (Exception e)
             {
@@ -117,7 +116,6 @@ namespace ErrosHub.WebApi.Controllers
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
                     CreatedAt = errorOccurrence.CreatedAt
                 });
-                // return Ok();
             }
             catch (Exception e)
             {
