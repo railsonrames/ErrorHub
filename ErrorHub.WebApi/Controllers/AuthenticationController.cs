@@ -39,5 +39,14 @@ namespace ErrorHub.WebApi.Controllers
 
             return Ok(authentication);
         }
+
+        [HttpGet]
+        [Route("authenticated")]
+        [Authorize]
+        //Verificar autenticação
+        public ActionResult Authenticated()
+        {
+            return Ok("User Authenticated");
+        }
     }
 }

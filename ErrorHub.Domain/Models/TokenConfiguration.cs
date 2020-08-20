@@ -8,5 +8,6 @@
         public bool ValidadeIssuerSigningKey { get; set; }
         public bool ValidateLifetime { get; set; }
         public int ExpirationInSeconds { get; set; }
+        public string Secret { get; set; }
     }
 }
