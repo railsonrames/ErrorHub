@@ -5,8 +5,8 @@ namespace ErrosHub.WebApi.ViewModels
 {
     public class ErrorOccurrenceVM
     {
-        public LevelOccurrence Level { get; set; }
-        public EnvironmentOccurrence Environment { get; set; }
+        public string Level { get; set; }
+        public string Environment { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public bool ArchiviedRecord { get; set; }
