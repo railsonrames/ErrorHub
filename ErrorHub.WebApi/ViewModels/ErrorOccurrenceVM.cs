@@ -1,10 +1,10 @@
-﻿using ErrorHub.Domain.Enuns;
-using System;
+﻿using System;
 
 namespace ErrosHub.WebApi.ViewModels
 {
     public class ErrorOccurrenceVM
     {
+        public int? Id { get; set; }
         public string Level { get; set; }
         public string Environment { get; set; }
         public string Title { get; set; }

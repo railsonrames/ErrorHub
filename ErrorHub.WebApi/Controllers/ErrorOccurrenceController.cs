@@ -5,6 +5,7 @@ using ErrosHub.WebApi.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 
 namespace ErrosHub.WebApi.Controllers
@@ -24,25 +25,49 @@ namespace ErrosHub.WebApi.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var errorsList = _errorOccurrenceService.GetAll();
+            var recoveredList = _errorOccurrenceService.GetAll();
+            var errorsList = recoveredList.Select(x => new ErrorOccurrenceVM
+            {
+                Id = x.Id,
+                Level = x.Level.ToString(),
+                Environment = x.Environment.ToString(),
+                Title = x.Title,
+                Description = x.Description,
+                ArchiviedRecord = x.ArchiviedRecord,
+                Origin = x.Origin,
+                CreatedAt = x.CreatedAt
+            });
             return Ok(errorsList);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            ErrorOccurrence errorOcurrence;
+            ErrorOccurrence errorRecovered;
             try
             {
-                errorOcurrence = _errorOccurrenceService.GetById(id);
+                errorRecovered = _errorOccurrenceService.GetById(id);
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-            if (errorOcurrence != null)
+            if (errorRecovered != null)
+            {
+                var errorOcurrence = new ErrorOccurrenceVM
+                {
+                    Id = errorRecovered.Id,
+                    Level = errorRecovered.Level.ToString(),
+                    Environment = errorRecovered.Environment.ToString(),
+                    Title = errorRecovered.Title,
+                    Description = errorRecovered.Description,
+                    ArchiviedRecord = errorRecovered.ArchiviedRecord,
+                    Origin = errorRecovered.Origin,
+                    CreatedAt = errorRecovered.CreatedAt
+                };
                 return Ok(errorOcurrence);
+            }
             else
                 return NoContent();
         }
@@ -57,8 +82,8 @@ namespace ErrosHub.WebApi.Controllers
                 _errorOccurrenceService.Save(new ErrorOccurrence
                 {
                     Title = errorOccurrence.Title,
-                    Level = (LevelOccurrence) level,
-                    Environment = (EnvironmentOccurrence) environment,
+                    Level = (LevelOccurrence)level,
+                    Environment = (EnvironmentOccurrence)environment,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
@@ -85,8 +110,8 @@ namespace ErrosHub.WebApi.Controllers
                 {
                     Id = id,
                     Title = errorOccurrence.Title,
-                    Level = (LevelOccurrence) level,
-                    Environment = (EnvironmentOccurrence) environment,
+                    Level = (LevelOccurrence)level,
+                    Environment = (EnvironmentOccurrence)environment,
                     Description = errorOccurrence.Description,
                     Origin = errorOccurrence.Origin,
                     ArchiviedRecord = errorOccurrence.ArchiviedRecord,
