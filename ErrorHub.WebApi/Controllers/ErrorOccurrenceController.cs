@@ -151,7 +151,7 @@ namespace ErrosHub.WebApi.Controllers
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
 
             return Ok("Deleted.");
