@@ -4,6 +4,7 @@ using ErrorHub.Domain.Models;
 using ErrorHub.Domain.Repositories.Interfaces;
 using ErrorHub.Domain.Services;
 using ErrorHub.Domain.Services.Interfaces;
+using ErrosHub.WebApi.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -84,27 +85,16 @@ namespace ErrosHub.WebApi
                     Version = "v1",
                     Description = "Hub de registros de errors"
                 });
-                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                x.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
                 {
-                    Name = "Autorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Scheme = "bearer"
                 });
-                x.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {{
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new OpenApiReference
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header
-                    }, new List<string>()
-                    }});
+
+                x.OperationFilter<AuthenticationRequirementsOperationFilter>();
+
             });
 
             services.AddMvcCore()
